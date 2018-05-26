@@ -1,0 +1,57 @@
+ 
+- Articles précedents 
+ 
+- Présentation du tutorial  
+	- présentation du projet
+	- présentation des points abordés 
+	- recommandations 
+ 
+- Créer l'interface du projet
+ 
+	- Gérer les ressources 
+		- présentations des ressources
+		- Théorie
+		- Pratique 
+
+	- Créer le plateau :
+		- Théorie : Node
+		- Créer le Node
+
+		- Créer les boutons 
+			- !Théorie bouton texture 
+			- Créer un bouton texture
+			- Créer 2eme bouton par duplication
+			- Créer les autres boutons
+			- Créer le label
+
+- Partie programmation
+
+	- Solution à implémenter
+		- Fonctionnement empirique
+		- Théorie 
+		- Notes
+		
+	- Implémentation _ready 
+		- Théorie
+		- tous cacher
+		- verif gagne
+		- tests
+			
+	- Mise en place des signaux
+		- Théorie
+		- _on_button_toggled
+		- connexions
+		
+	- verif_combi
+		- théorie
+		- implémentation
+		- tests
+		
+- Conclusion
+	- Récapitulatif
+	- Allez-plus loin
+	- Remerciements
+	
+
+	
+	

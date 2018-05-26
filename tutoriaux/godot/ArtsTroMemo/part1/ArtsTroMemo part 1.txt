@@ -1,0 +1,129 @@
+Godot 0003 - ArtsTroMemo - partie 1 / 2D / GDScript
+ 
+[spoiler="Articles précédents sur Godot"]
+ -  [url=http://lesartstronautes.bbconcept.net/t1181-en-attendant-godot]En attendant Godot[/url]
+ -  [url=http://lesartstronautes.bbconcept.net/t1182-godot-0000-installation#13034]Installation de Godot[/url]
+ -  [url=http://lesartstronautes.bbconcept.net/t1183-godot-0001-decouverte-godot-2d-gdscript]Tutoriel CacheMoi - 2D - GDScript[/url]
+ -  [url=http://lesartstronautes.bbconcept.net/t1184-godot-0002-hello-2d-0002#13028]Tutoriel Hello - 2D - GDScript[/url]
+[/spoiler]
+
+Bonjour à tous et bienvenue dans ce nouveau billet consacré a Godot.
+
+Cette fois, nous allons créer un jeu de type mémory. Le principe est simple, 16 cartes sont présentées à l'écran face cachées, on en retourne deux : si elles forment une combinaison gagnante on les éliminent. La partie est gagnée lorsque le plateau est vide.
+
+Ce billet sera scindé en deux parties, nous verrons dans un premier temps comment gérer nos propres ressources graphiques et comment utiliser les nœuds de type "ButtonTexture". Puis, dans un second temps nous interconnecterons les différents éléments pour programmer le comportement du jeu.
+
+Dans cette version, les éléments sont crées "en dur", c'est à dire que si je relance 100 fois le jeu, j'aurais 100 fois la même partie. Le but du tutoriel est la prise en main de l'environnement et la mise en place des mécanismes pour gérer les cartes.
+
+Pour créer le jeu de 16 cartes, je me suis permis de piocher dans les ressources : spécial "les Artstronautes" de l'artstrobook de Trèfle. lesartstronautes.bbconcept.net/t1188-artstrobook-trefle#13073. Merci à toi Trèfle :)
+
+Pour les faces de mes carte, j'ai pris 2 poses différentes pour 8 Artstronautes que j'ai transformée en vignette de 150x200 pixels collée sur un fond texture bois clair avec un encadrement. Toutes les cartes auront le même dos : une vignette de 150x200 pixels sur un fond texture bois plus foncé. Pour ajouter un petit effet au survol de la souris, j'ai créé une vignette bois clair vide.
+
+== lien vers les ressources ==
+
+Créez un projet nommé "ArtsTroMemo". L'onglet "Système de fichier" affiche les fichiers de votre projet : "default_env.tres" et "icon.png". Avec le clic-doit, créez un nouveau dossier "images", ouvrez-le et glissez-y les ressources graphiques du jeu depuis l'explorateur Windows.
+
+Dans l'onglet "Scène", créez le nœud racine de type "Node", c'est le nœud au plus haut niveau de l'arborescence. Il est symbolisé par un rond gris. Renommez-le "plateau_jeu"
+
+[url=https://servimg.com/view/19900465/105][img]https://i62.servimg.com/u/f62/19/90/04/65/010_no10.png[/img][/url]
+
+Ce nœud n'a pas de représentation graphique dans la vue 2D. Dans l'inspecteur, il n'y a que la section "Node" qui contient la propriété "Script". C'est-à-dire que ce nœud n'a qu'une vocation : contenir des nœuds enfants et être rattaché à un script.
+
+[url=https://servimg.com/view/19900465/101][img]https://i62.servimg.com/u/f62/19/90/04/65/011_no10.png[/img][/url]
+
+Créez dans "Plateau_Jeu" un nœud enfant de type "TextureButton".
+
+[url=https://servimg.com/view/19900465/102][img]https://i62.servimg.com/u/f62/19/90/04/65/020_te10.png[/img][/url]
+
+Renommez le noeud "TextureButton" en "carte_lydia_1". Le "TextureButton" permet d'utiliser des images à afficher selon l'état du bouton :
+- Normal, c'est l'image utilisée du bouton par défaut
+- Pressed lorsque le bouton est enfoncé
+- Hover lorsque qu'on survole le bouton avec le curseur
+- Disabled quand le bouton est inactif
+- Focused dans le bouton est sélectionné
+
+== image des 5 textures ==
+
+Dans notre cas, nous n'utiliserons que les 3 états : normal, pressed et hover. En effet, nous désirons un bouton "bascule" : Le bouton est en état "normal", il s'enclenche et passe en état "pressed" lorsque l'on clique dessus et y reste. Pour revenir à l'état normal, il faut de nouveau cliquer dessus pour le désenclencher.
+
+
+Activer l'option "toggle_button" du bouton, et attribuer les textures aux différents états du bouton : Normal = normal.png, Hover = survol.png
+
+[url=https://servimg.com/view/19900465/109][img]https://i62.servimg.com/u/f62/19/90/04/65/030_bo10.png[/img][/url]
+
+Le bouton est créé sur la vue 2D en état "normal", face cachée, c'est ce qu'il faut pour jouer. Par contre, pour nous, dans l'environnement de création cela risque vite de devenir compliqué à gérer. Aussi je vous propose d'activer l'option "pressed" du bouton pour faire afficher la face de la carte pour l'instant vide.
+
+Ajoutez la texture Pressed = enfoncé_lydia_1.
+
+[url=https://servimg.com/view/19900465/103][img]https://i62.servimg.com/u/f62/19/90/04/65/035_bo10.png[/img][/url]
+
+Sauvegarder votre scène (CRTL+S) à la racine du dossier "res://" sous le nom "Plateau_Jeu.scn".
+
+== img res_scene ==
+
+Nous allons maintenant créer la seconde carte du jeu en dupliquant la première, clic droit dupliquer (ou CTRL+D), Godot créé "Carte_Lydia_2". La copie est créée sur l'originale, déplacez-la. Changez l'image Pressed : sélectionnez "enfoncé_lydia_2".
+
+[url=https://servimg.com/view/19900465/104][img]https://i62.servimg.com/u/f62/19/90/04/65/050_bo10.png[/img][/url]
+
+Pour vous aider à gérer et à disposer les cartes sur le plateau, utilisez les outils grille et magnétisme.
+
+[url=https://servimg.com/view/19900465/99][img]https://i62.servimg.com/u/f62/19/90/04/65/060_ou10.png[/img][/url]
+
+Créez de même les 14 autres cartes en associant correctement ressources à l'image "Pressed". N'oubliez pas de sauvegarder régulièrement votre travail.
+
+[url=https://servimg.com/view/19900465/110][img]https://i62.servimg.com/u/f62/19/90/04/65/070_ca10.png[/img][/url]
+
+Disposez les cartes à l'écran, redimensionnez la taille de la fenêtre. Nous pouvons déjà afficher ou masquer les cartes. Au lancement du jeu, toutes les cartes sont disposées face visible.
+
+[url=https://servimg.com/view/19900465/95][img]https://i62.servimg.com/u/f62/19/90/04/65/080_pa10.png[/img][/url] 
+
+[url=https://servimg.com/view/19900465/111][img]https://i62.servimg.com/u/f62/19/90/04/65/070_je10.png[/img][/url]
+
+En effet, souvenez-vous, en début de tutorial dans l'inspecteur je vous ai fait activer l'option "pressed" pour le bouton. Attacher un script "non intégré" au noeud "Plateau_Jeu". Le fichier contenant le script est crée dans "res://"
+
+[url=https://servimg.com/view/19900465/97][img]https://i62.servimg.com/u/f62/19/90/04/65/097_sc10.png[/img][/url]
+
+[url=https://servimg.com/view/19900465/106][img]https://i62.servimg.com/u/f62/19/90/04/65/080_pa10.png[/img][/url]
+
+== 90 image script2 ==
+ 
+
+Nous allons créer une fonction nommée "_retourner_cartes" qui désactive l'option "pressed" pour chacune des cartes.
+
+Collez-le code suivant dans le script en dessous dui code généré par Godot :
+[code]
+# Tourner toutes les cartes face cachée
+func _retourner_cartes():
+$Carte_Lydia_1.pressed = false
+$Carte_Lydia_2.pressed = false
+$Carte_Euka_1.pressed = false
+$Carte_Euka_2.pressed = false
+$Carte_Flicky_1.pressed = false
+$Carte_Flicky_2.pressed = false
+$Carte_Kokokaine_1.pressed = false
+$Carte_Kokokaine_2.pressed = false
+$Carte_Zlowa_1.pressed = false
+$Carte_Zlowa_2.pressed = false
+$Carte_Yndra_1.pressed = false
+$Carte_Yndra_2.pressed = false
+$Carte_Valou_1.pressed = false
+$Carte_Valou_2.pressed = false
+$Carte_mow_1.pressed = false
+$Carte_mow_2.pressed = false
+[/code]
+
+Revenez vers le début du script, nous y trouvons la fonction _ready()
+
+[url=https://servimg.com/view/19900465/94][img]https://i62.servimg.com/u/f62/19/90/04/65/105_re10.png[/img][/url]
+
+Godot nous indique que cette dernière est appelée lorsque le noeud est créé. Nous allons la modifier afin qu'elle execute la fonction _retourner_cartes que nous venons d'écrire.
+
+[url=https://servimg.com/view/19900465/107][img]https://i62.servimg.com/u/f62/19/90/04/65/107_re10.png[/img][/url]
+
+Si vous lancez maintenant le jeu, toutes les cartes apparaissent sur le plateau face cachées.
+
+[url=https://servimg.com/view/19900465/108][img]https://i62.servimg.com/u/f62/19/90/04/65/110_pl10.png[/img][/url]
+
+Le plateau du jeu est maintenant prêt. Je vous donne rendez-vous très vite pour mettre en place les mécanismes du jeu.
+
+J'espère que ce tutoriel vous a plu et que vous avez pris plaisir à le suivre.
