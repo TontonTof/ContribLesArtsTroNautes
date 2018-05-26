@@ -1,10 +1,8 @@
-Godot 0003 - ArtsTroMemo - partie 1 / 2D / GDScript
- 
-[spoiler="Articles précédents sur Godot"]
- -  [url=http://lesartstronautes.bbconcept.net/t1181-en-attendant-godot]En attendant Godot[/url]
- -  [url=http://lesartstronautes.bbconcept.net/t1182-godot-0000-installation#13034]Installation de Godot[/url]
- -  [url=http://lesartstronautes.bbconcept.net/t1183-godot-0001-decouverte-godot-2d-gdscript]Tutoriel CacheMoi - 2D - GDScript[/url]
- -  [url=http://lesartstronautes.bbconcept.net/t1184-godot-0002-hello-2d-0002#13028]Tutoriel Hello - 2D - GDScript[/url]
+﻿[spoiler="Articles précédents sur Godot"]
+-  [url=http://lesartstronautes.bbconcept.net/t1181-en-attendant-godot]En attendant Godot[/url]
+-  [url=http://lesartstronautes.bbconcept.net/t1182-godot-0000-installation#13034]Installation de Godot[/url]
+-  [url=http://lesartstronautes.bbconcept.net/t1183-godot-0001-decouverte-godot-2d-gdscript]Tutoriel CacheMoi - 2D - GDScript[/url]
+-  [url=http://lesartstronautes.bbconcept.net/t1184-godot-0002-hello-2d-0002#13028]Tutoriel Hello - 2D - GDScript[/url]
 [/spoiler]
 
 Bonjour à tous et bienvenue dans ce nouveau billet consacré a Godot.
@@ -19,9 +17,11 @@ Pour créer le jeu de 16 cartes, je me suis permis de piocher dans les ressource
 
 Pour les faces de mes carte, j'ai pris 2 poses différentes pour 8 Artstronautes que j'ai transformée en vignette de 150x200 pixels collée sur un fond texture bois clair avec un encadrement. Toutes les cartes auront le même dos : une vignette de 150x200 pixels sur un fond texture bois plus foncé. Pour ajouter un petit effet au survol de la souris, j'ai créé une vignette bois clair vide.
 
-== lien vers les ressources ==
+https://github.com/TontonTof/ContribLesArtsTroNautes/raw/master/tutoriaux/godot/ArtsTroMemo/part1/artsTroMemo_res.zip
 
 Créez un projet nommé "ArtsTroMemo". L'onglet "Système de fichier" affiche les fichiers de votre projet : "default_env.tres" et "icon.png". Avec le clic-doit, créez un nouveau dossier "images", ouvrez-le et glissez-y les ressources graphiques du jeu depuis l'explorateur Windows.
+
+[url=https://servimg.com/view/19900465/112][img]https://i62.servimg.com/u/f62/19/90/04/65/005_do10.png[/img][/url]
 
 Dans l'onglet "Scène", créez le nœud racine de type "Node", c'est le nœud au plus haut niveau de l'arborescence. Il est symbolisé par un rond gris. Renommez-le "plateau_jeu"
 
@@ -42,7 +42,7 @@ Renommez le noeud "TextureButton" en "carte_lydia_1". Le "TextureButton" permet 
 - Disabled quand le bouton est inactif
 - Focused dans le bouton est sélectionné
 
-== image des 5 textures ==
+[url=https://servimg.com/view/19900465/113][img]https://i62.servimg.com/u/f62/19/90/04/65/025_5t10.png[/img][/url]
 
 Dans notre cas, nous n'utiliserons que les 3 états : normal, pressed et hover. En effet, nous désirons un bouton "bascule" : Le bouton est en état "normal", il s'enclenche et passe en état "pressed" lorsque l'on clique dessus et y reste. Pour revenir à l'état normal, il faut de nouveau cliquer dessus pour le désenclencher.
 
@@ -59,7 +59,7 @@ Ajoutez la texture Pressed = enfoncé_lydia_1.
 
 Sauvegarder votre scène (CRTL+S) à la racine du dossier "res://" sous le nom "Plateau_Jeu.scn".
 
-== img res_scene ==
+[url=https://servimg.com/view/19900465/96][img]https://i62.servimg.com/u/f62/19/90/04/65/40_sys10.png[/img][/url]
 
 Nous allons maintenant créer la seconde carte du jeu en dupliquant la première, clic droit dupliquer (ou CTRL+D), Godot créé "Carte_Lydia_2". La copie est créée sur l'originale, déplacez-la. Changez l'image Pressed : sélectionnez "enfoncé_lydia_2".
 
@@ -73,43 +73,41 @@ Créez de même les 14 autres cartes en associant correctement ressources à l'i
 
 [url=https://servimg.com/view/19900465/110][img]https://i62.servimg.com/u/f62/19/90/04/65/070_ca10.png[/img][/url]
 
-Disposez les cartes à l'écran, redimensionnez la taille de la fenêtre. Nous pouvons déjà afficher ou masquer les cartes. Au lancement du jeu, toutes les cartes sont disposées face visible.
+Disposez les cartes à l'écran, redimensionnez la taille de la fenêtre. Nous pouvons déjà afficher ou masquer les cartes.
 
 [url=https://servimg.com/view/19900465/95][img]https://i62.servimg.com/u/f62/19/90/04/65/080_pa10.png[/img][/url] 
 
 [url=https://servimg.com/view/19900465/111][img]https://i62.servimg.com/u/f62/19/90/04/65/070_je10.png[/img][/url]
 
-En effet, souvenez-vous, en début de tutorial dans l'inspecteur je vous ai fait activer l'option "pressed" pour le bouton. Attacher un script "non intégré" au noeud "Plateau_Jeu". Le fichier contenant le script est crée dans "res://"
+Au lancement du jeu, toutes les cartes sont disposées face visible. En effet, souvenez-vous, en début de tutorial dans l'inspecteur je vous ai fait activer l'option "pressed" pour le bouton. Attacher un script "non intégré" au noeud "Plateau_Jeu". Le fichier contenant le script est crée dans "res://"
+
+[url=https://servimg.com/view/19900465/98][img]https://i62.servimg.com/u/f62/19/90/04/65/095_sc10.png[/img][/url]
 
 [url=https://servimg.com/view/19900465/97][img]https://i62.servimg.com/u/f62/19/90/04/65/097_sc10.png[/img][/url]
 
-[url=https://servimg.com/view/19900465/106][img]https://i62.servimg.com/u/f62/19/90/04/65/080_pa10.png[/img][/url]
-
-== 90 image script2 ==
- 
-
 Nous allons créer une fonction nommée "_retourner_cartes" qui désactive l'option "pressed" pour chacune des cartes.
 
-Collez-le code suivant dans le script en dessous dui code généré par Godot :
+Collez-le code suivant dans le script en dessous du code généré par Godot :
+
 [code]
 # Tourner toutes les cartes face cachée
 func _retourner_cartes():
-$Carte_Lydia_1.pressed = false
-$Carte_Lydia_2.pressed = false
-$Carte_Euka_1.pressed = false
-$Carte_Euka_2.pressed = false
-$Carte_Flicky_1.pressed = false
-$Carte_Flicky_2.pressed = false
-$Carte_Kokokaine_1.pressed = false
-$Carte_Kokokaine_2.pressed = false
-$Carte_Zlowa_1.pressed = false
-$Carte_Zlowa_2.pressed = false
-$Carte_Yndra_1.pressed = false
-$Carte_Yndra_2.pressed = false
-$Carte_Valou_1.pressed = false
-$Carte_Valou_2.pressed = false
-$Carte_mow_1.pressed = false
-$Carte_mow_2.pressed = false
+	$Carte_Lydia_1.pressed = false
+	$Carte_Lydia_2.pressed = false
+	$Carte_Euka_1.pressed = false
+	$Carte_Euka_2.pressed = false
+	$Carte_Flicky_1.pressed = false
+	$Carte_Flicky_2.pressed = false
+	$Carte_Kokokaine_1.pressed = false
+	$Carte_Kokokaine_2.pressed = false
+	$Carte_Zlowa_1.pressed = false
+	$Carte_Zlowa_2.pressed = false
+	$Carte_Yndra_1.pressed = false
+	$Carte_Yndra_2.pressed = false
+	$Carte_Valou_1.pressed = false
+	$Carte_Valou_2.pressed = false
+	$Carte_Mow_1.pressed = false
+	$Carte_Mow_2.pressed = false
 [/code]
 
 Revenez vers le début du script, nous y trouvons la fonction _ready()
