@@ -1,0 +1,50 @@
+﻿[spoiler="Articles précédents sur Godot"]
+-  [url=http://lesartstronautes.bbconcept.net/t1181-en-attendant-godot]En attendant Godot[/url]
+-  [url=http://lesartstronautes.bbconcept.net/t1182-godot-0000-installation#13034]Installation de Godot[/url]
+-  [url=http://lesartstronautes.bbconcept.net/t1183-godot-0001-decouverte-godot-2d-gdscript]Tutoriel CacheMoi - 2D - GDScript[/url]
+-  [url=http://lesartstronautes.bbconcept.net/t1184-godot-0002-hello-2d-0002#13028]Tutoriel Hello - 2D - GDScript[/url]
+[/spoiler]
+
+Bienvenue dans la seconde partie de ce tutorial consacré à la création d'un Mémory sous Godot.
+ 
+Dans l'article précédent http://lesartstronautes.bbconcept.net/t1198-godot-0003-artstromemo-partie-1-2d-gdscript#13152
+
+Nous avons crée les cartes et préparer le plateau pour entamer une nouvelle partie. 
+
+[spoiler]
+Vous pouvez récupérer le projet de la partie 1 de ce tutoriel :
+
+https://github.com/TontonTof/ContribLesArtsTroNautes/raw/master/tutoriaux/godot/ArtsTroMemo/part1/godot_ArtsTroMemo_part1.zip
+
+Décompressez-le, Lancez Godot puis "importer" et selectionnez le fichier /ArtsTroMemo/project.godot 
+[/spoiler]
+
+Dans cet article, nous allons mettre en place le déroulement de la partie. 
+
+Le principe du jeu est simple : Le joueur retourne deux cartes, si elles constituent une combinaison gagnante on enleve la paire de carte du plateau sinon on retourne les cartes face cachées et on continue. 
+La partie est gagnée lorsqu'il n'y a plus de cartes sur le plateau.
+
+Nous allons ajouter quelques objets a notre plateau, deux labels, un pour afficher le nombre de tours de la partie, et le second pour indiquer le nombre de paires restantes a trouver.
+
+Ajoutez un noeud de type "Label" à la scène nommé "Nombre_tours".
+
+== 010_nodelib_New ==
+
+[url=https://servimg.com/view/19900465/114][img]https://i62.servimg.com/u/f62/19/90/04/65/010_no11.png[/img][/url]
+
+Dans l'inspecteur, modifier la propriété "text" et saisissez "Tour numéro : 00"
+
+[url=https://servimg.com/view/19900465/115][img]https://i62.servimg.com/u/f62/19/90/04/65/020_li10.png[/img][/url]
+
+De même créez un Label nommé "Paires_restantes" avec la propriété "text" = "Nombre de paires restantes : 00". Disposez les deux labels au milieu du plateau.
+
+[url=https://servimg.com/view/19900465/116][img]https://i62.servimg.com/u/f62/19/90/04/65/030_sc10.png[/img][/url]
+
+Ouvrez le script "Plateau_jeu.gd", nous allons ajouter deux variables pour mémoriser le numéro du tour et le nombre de paires restantes et créer la fonction "_affiche_infos()" qui va mettre à jour les labels a partir de ces variables.
+
+[url=https://servimg.com/view/19900465/117][img]https://i62.servimg.com/u/f62/19/90/04/65/040_af10.png[/img][/url]
+
+[spoiler = Note]
+Note : La fonction str() permet de transformer un nombre en texte pouvant être affiché.
+[/spoiler]
+ 
